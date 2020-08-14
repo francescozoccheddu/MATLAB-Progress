@@ -45,7 +45,7 @@ classdef ProgressBar < handle
                 if obj.maxCliProgressReports > 0
                     nextUpdate = 1 / obj.maxCliProgressReports + obj.mLastReportedCompletion;
                     if nextUpdate <= obj.mDef.completion
-                        fprintf('%s: %.2f%\n', obj.message, obj.mDef.completion * 100);
+                        fprintf('%s: %.2f%%\n', obj.message, obj.mDef.completion * 100);
                     end
                 end
             end
