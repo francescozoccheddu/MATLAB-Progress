@@ -75,13 +75,11 @@ classdef Progress
                 return
             end
 
-            obj.mOwner.setChildren(obj.mIndices, startIndex, weights);
+            obj.mOwner.setChildrenAt(obj.mIndices, startIndex, weights);
             count = size(weights, 1);
-            endIndices = startIndex + (1:count);
-            childrenIndices = num2cell(vertcat(repmat(obj.mIndices, 1, count), endIndices), 1);
-            children(count, 1) = Progress.Progress(obj.mOwner, childrenIndices(:, end));
-            [children.mOwner] = deal(obj.mOwner);
-            [children.mIndices] = childrenIndices{:};
+            for i = startIndex:startIndex + count
+                children(i, 1) = CVP.Utils.Progress.Progress(obj.mOwner, vertcat(obj.mIndices, i));
+            end
             
         end
 

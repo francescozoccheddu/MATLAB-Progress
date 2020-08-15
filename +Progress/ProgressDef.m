@@ -76,7 +76,7 @@ classdef ProgressDef < handle
                     changed = true;
                 else
                     obj.ensureChild(indices(1));
-                    changed = obj.mChildren(indices(1)).complete(indices(2:end));
+                    changed = obj.mChildren(indices(1)).completeAt(indices(2:end));
                     if changed
                         changed = obj.updateCompletion();
                     end
