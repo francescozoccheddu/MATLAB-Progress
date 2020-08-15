@@ -56,11 +56,12 @@ classdef ProgressBar < handle
 
         function setupFigure(obj)
 
+            content = sprintf('%s (%d%%)', obj.message, round(obj.mDef.completion * 100));
             if obj.isFigureOpen
-                waitbar(obj.mDef.completion, obj.mFigure, obj.message);
+                waitbar(obj.mDef.completion, obj.mFigure, content);
                 obj.mFigure.Name = obj.message;
             else
-                obj.mFigure = waitbar(obj.mDef.completion, obj.message, 'Name', obj.message);
+                obj.mFigure = waitbar(obj.mDef.completion, content, 'Name', obj.message);
             end
 
         end
