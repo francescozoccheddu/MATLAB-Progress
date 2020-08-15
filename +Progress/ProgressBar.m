@@ -45,7 +45,7 @@ classdef ProgressBar < handle
                 if obj.maxCliProgressReports > 0
                     nextUpdate = 1 / obj.maxCliProgressReports + obj.mLastReportedCompletion;
                     if nextUpdate <= obj.mDef.completion
-                        fprintf('%s: %.2f%%\n', obj.message, obj.mDef.completion * 100);
+                        obj.reportProgress(true);
                     end
                 end
             end
@@ -58,8 +58,9 @@ classdef ProgressBar < handle
 
             if obj.isFigureOpen
                 waitbar(obj.mDef.completion, obj.mFigure, obj.message);
+                obj.mFigure.Name = obj.message;
             else
-                obj.mFigure = waitbar(obj.mDef.completion, obj.message);
+                obj.mFigure = waitbar(obj.mDef.completion, obj.message, 'Name', obj.message);
             end
 
         end
@@ -96,7 +97,7 @@ classdef ProgressBar < handle
         function obj = ProgressBar(message, maxCliProgressReports, forceSync, forceCli)
 
             arguments
-                message (1, 1) string = ''
+                message (1, 1) string = 'Progress'
                 maxCliProgressReports (1, 1) {mustBeInteger, mustBeNonnegative} = 10
                 forceSync (1, 1) logical = false
                 forceCli (1, 1) logical = false
@@ -115,6 +116,19 @@ classdef ProgressBar < handle
             delete(obj.mFigure);
             delete(obj.mQueue);
             obj.mQueue = false;
+        end
+
+        function reportProgress(obj, force)
+
+            arguments
+                obj
+                force (1, 1) logical = false
+            end
+
+            if force || ~obj.isFigureOpen
+                fprintf('%s: %.2f%%\n', obj.message, obj.mDef.completion * 100);
+            end
+
         end
 
         function set.message(obj, message)
