@@ -40,7 +40,7 @@ classdef Progress
                 count (1, 1) {mustBeInteger, mustBePositive} = 1
             end
             
-            if isempty(obj)
+            if isempty(obj) || count < 1
                 return
             end
 
@@ -55,7 +55,7 @@ classdef Progress
                 count (1, 1) {mustBeInteger, mustBePositive}
             end
 
-            if isempty(obj)
+            if isempty(obj) || count < 1
                 return
             end
 
@@ -71,7 +71,7 @@ classdef Progress
                 startIndex (1, 1) {mustBeInteger, mustBePositive} = 1
             end
 
-            if isempty(obj)
+            if isempty(obj) || isempty(weights)
                 return
             end
 
