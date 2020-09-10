@@ -76,7 +76,7 @@ classdef ProgressDef < handle
                     changed = true;
                 else
                     obj.ensureChild(indices(1));
-                    changed = obj.mChildren(indices(1)).completeAt(indices(2:end));
+                    changed = obj.mChildren(indices(1)).completeAt(indices(2 : end));
                     if changed
                         changed = obj.updateCompletion();
                     end
@@ -104,7 +104,7 @@ classdef ProgressDef < handle
                     changed = obj.updateCompletion();
                 else
                     obj.ensureChild(indices(1));
-                    changed = obj.mChildren(indices(1)).stepAt(indices(2:end), count);
+                    changed = obj.mChildren(indices(1)).stepAt(indices(2 : end), count);
                     if changed
                         changed = obj.updateCompletion();
                     end
@@ -132,7 +132,7 @@ classdef ProgressDef < handle
                     changed = obj.updateCompletion();
                 else
                     obj.ensureChild(indices(1));
-                    changed = obj.mChildren(indices(1)).addStepsAt(indices(2:end), count);
+                    changed = obj.mChildren(indices(1)).addStepsAt(indices(2 : end), count);
                     if changed
                         changed = obj.updateCompletion();
                     end
@@ -146,7 +146,7 @@ classdef ProgressDef < handle
         function changed = setChildrenAt(obj, indices, startIndex, weights)
 
             arguments
-                obj
+                obj 
                 indices (:, 1) {mustBeInteger, mustBePositive}
                 startIndex (1, 1) {mustBeInteger, mustBePositive}
                 weights (:, 1) {mustBeReal, mustBePositive}
@@ -160,11 +160,11 @@ classdef ProgressDef < handle
                     endIndex = startIndex + size(weights, 1) - 1;
                     obj.mChildren(endIndex).mWeight = 0;
                     weights = num2cell(weights);
-                    [obj.mChildren(startIndex:endIndex).mWeight] = weights{:};
+                    [obj.mChildren(startIndex : endIndex).mWeight] = weights{:};
                     changed = obj.updateCompletion();
                 else
                     obj.ensureChild(indices(1));
-                    changed = obj.mChildren(indices(1)).setChildrenAt(indices(2:end), startIndex, weights);
+                    changed = obj.mChildren(indices(1)).setChildrenAt(indices(2 : end), startIndex, weights);
                     if changed
                         changed = obj.updateCompletion();
                     end
