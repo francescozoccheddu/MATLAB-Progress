@@ -2,7 +2,7 @@ classdef ProgressDef < handle
 
     properties (Access = private)
         mWeight = 0
-        mChildren = Progress.ProgressDef.empty
+        mChildren = MProgress.ProgressDef.empty
         mTotal = NaN
         mCompleted = NaN
     end
@@ -50,14 +50,14 @@ classdef ProgressDef < handle
             end
 
             if length(obj.mChildren) < index
-                obj.mChildren(index) = Progress.ProgressDef();
+                obj.mChildren(index) = MProgress.ProgressDef();
             end
 
         end
 
     end
 
-    methods (Access = {?Progress.ProgressBar})
+    methods (Access = {?MProgress.ProgressBar})
 
         function changed = completeAt(obj, indices)
 
@@ -70,7 +70,7 @@ classdef ProgressDef < handle
                 if isempty(indices)
                     obj.isCompleted = true;
                     obj.completion = 1;
-                    obj.mChildren = Progress.ProgressDef.empty;
+                    obj.mChildren = MProgress.ProgressDef.empty;
                     obj.mTotal = NaN;
                     obj.mCompleted = NaN;
                     changed = true;

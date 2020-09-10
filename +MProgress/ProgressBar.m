@@ -28,7 +28,7 @@ classdef ProgressBar < handle
         end
 
         function hasParallelPool = hasParallelPool()
-            hasParallelPool =  Progress.ProgressBar.hasParallelToolbox() && ~isempty(gcp('nocreate'));
+            hasParallelPool =  MProgress.ProgressBar.hasParallelToolbox() && ~isempty(gcp('nocreate'));
         end
         
         function hasDisplay = hasDisplay()
@@ -106,11 +106,11 @@ classdef ProgressBar < handle
                 forceCli (1, 1) logical = false
             end
 
-            obj.mDef = Progress.ProgressDef();
-            obj.progress = Progress.Progress(obj, []);
+            obj.mDef = MProgress.ProgressDef();
+            obj.progress = MProgress.Progress(obj, []);
             obj.minCliReportMargin = minCliReportMargin;
-            obj.isFigureOpen = ~forceCli && Progress.ProgressBar.hasDisplay();
-            obj.isParallel = ~forceSync && Progress.ProgressBar.hasParallelToolbox();
+            obj.isFigureOpen = ~forceCli && MProgress.ProgressBar.hasDisplay();
+            obj.isParallel = ~forceSync && MProgress.ProgressBar.hasParallelToolbox();
             obj.message = message;
 
         end
@@ -118,7 +118,7 @@ classdef ProgressBar < handle
         function delete(obj)
 
             arguments
-                obj (1, 1) Progress.ProgressBar
+                obj (1, 1) MProgress.ProgressBar
             end
 
             obj.isFigureOpen = false;
@@ -129,7 +129,7 @@ classdef ProgressBar < handle
         function reportProgress(obj, forceCli)
 
             arguments
-                obj (1, 1) Progress.ProgressBar
+                obj (1, 1) MProgress.ProgressBar
                 forceCli (1, 1) logical = false
             end
 
@@ -143,7 +143,7 @@ classdef ProgressBar < handle
         function set.message(obj, message)
 
             arguments
-                obj (1, 1) Progress.ProgressBar
+                obj (1, 1) MProgress.ProgressBar
                 message (1, 1) string
             end
 
@@ -159,7 +159,7 @@ classdef ProgressBar < handle
         function set.minCliReportMargin(obj, minCliReportMargin)
 
             arguments
-                obj (1, 1) Progress.ProgressBar
+                obj (1, 1) MProgress.ProgressBar
                 minCliReportMargin (1, 1) {mustBeReal, mustBeNonnegative, mustBeLessThanOrEqual(minCliReportMargin, 1)}
             end
 
@@ -170,13 +170,13 @@ classdef ProgressBar < handle
         function set.isFigureOpen(obj, isFigureOpen)
 
             arguments
-                obj (1, 1) Progress.ProgressBar
+                obj (1, 1) MProgress.ProgressBar
                 isFigureOpen (1, 1) logical
             end
 
             if isFigureOpen ~= obj.isFigureOpen
                 if isFigureOpen
-                    if ~Progress.ProgressBar.hasDisplay()
+                    if ~MProgress.ProgressBar.hasDisplay()
                         error('No display');
                     end
                     obj.setupFigure();
@@ -190,13 +190,13 @@ classdef ProgressBar < handle
         function set.isParallel(obj, isParallel)
 
             arguments
-                obj (1, 1) Progress.ProgressBar
+                obj (1, 1) MProgress.ProgressBar
                 isParallel (1, 1) logical
             end
             
             if isParallel ~= obj.isParallel
                 if isParallel
-                    if ~Progress.ProgressBar.hasParallelToolbox()
+                    if ~MProgress.ProgressBar.hasParallelToolbox()
                         error('No parallel toolbox');
                     end
                     obj.setupQueue();
@@ -211,7 +211,7 @@ classdef ProgressBar < handle
         function isFigureOpen = get.isFigureOpen(obj)
 
             arguments
-                obj (1, 1) Progress.ProgressBar
+                obj (1, 1) MProgress.ProgressBar
             end
 
             isFigureOpen = ishandle(obj.mFigure);
@@ -221,7 +221,7 @@ classdef ProgressBar < handle
         function isParallel = get.isParallel(obj)
 
             arguments
-                obj (1, 1) Progress.ProgressBar
+                obj (1, 1) MProgress.ProgressBar
             end
 
             isParallel = obj.mQueue ~= false;
@@ -230,12 +230,12 @@ classdef ProgressBar < handle
 
     end
 
-    methods (Access = {?Progress.Progress})
+    methods (Access = {?MProgress.Progress})
 
         function completeAt(obj, indices)
 
             arguments
-                obj (1, 1) Progress.ProgressBar
+                obj (1, 1) MProgress.ProgressBar
                 indices (:, 1) {mustBeInteger, mustBePositive}
             end
 
@@ -246,7 +246,7 @@ classdef ProgressBar < handle
         function stepAt(obj, indices, count)
             
             arguments
-                obj (1, 1) Progress.ProgressBar
+                obj (1, 1) MProgress.ProgressBar
                 indices (:, 1) {mustBeInteger, mustBePositive}
                 count (1, 1) {mustBeInteger, mustBeNonnegative}
             end
@@ -258,7 +258,7 @@ classdef ProgressBar < handle
         function addStepsAt(obj, indices, count)
             
             arguments
-                obj (1, 1) Progress.ProgressBar
+                obj (1, 1) MProgress.ProgressBar
                 indices (:, 1) {mustBeInteger, mustBePositive}
                 count (1, 1) {mustBeInteger, mustBeNonnegative}
             end
@@ -270,7 +270,7 @@ classdef ProgressBar < handle
         function setChildrenAt(obj, indices, startIndex, weights)
             
             arguments
-                obj (1, 1) Progress.ProgressBar
+                obj (1, 1) MProgress.ProgressBar
                 indices (:, 1) {mustBeInteger, mustBePositive}
                 startIndex (1, 1) {mustBeInteger, mustBePositive}
                 weights (:, 1) {mustBeReal, mustBePositive}
